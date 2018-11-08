@@ -102,7 +102,7 @@ Then this function can be called within Java code by declaring it first as a nat
 public static native void methodname();
 ```
 
-You can read more about it [here](https://mozilla.github.io/firefox-browser-architecture/experiments/2017-09-21-rust-on-android.html).
+For more information you can read the guide written by [mozilla](https://mozilla.github.io/firefox-browser-architecture/experiments/2017-09-21-rust-on-android.html).
 
 
 
