@@ -2,10 +2,10 @@
 
 First things first, I had this Rust app: [torchbear](https://github.com/foundpatterns/torchbear),
 which I had to compile and run on android device using [Termux](https://termux.com/). 
-So, I had to compile binary for two major android architectures `arm` and `aarch64`(also known as 
+So, I had to compile binary for two major android architectures `arm32` and `aarch64`(also known as 
 `arm64`).
 
-*Note: If you have `armv7` architecture. `arm` binary should run just fine on it.*
+*Note: If you have `armv7`(which is also a `arm32`) architecture. `arm32` binary should run just fine on it.*
 
 In order to start we will need [Android NDK](https://developer.android.com/ndk/downloads/). Install
 it and then create a environmental variable with the location. 
