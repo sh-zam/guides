@@ -7,6 +7,9 @@ So, I had to compile binary for two major android architectures `arm32` and `aar
 
 *Note: If you have `armv7`(which is also a `arm32`) architecture. `arm32` binary should run just fine on it.*
 
+**tl;dr:** Here is the script which I wrote to automate the process: [android-rust-build.sh](https://gist.github.com/sh-zam/a784506a3e21f1a7bee2ba5f93a4ecb6).
+If there are any errors look into the errors section below.
+
 In order to start we will need [Android NDK](https://developer.android.com/ndk/downloads/). Install
 it and then create a environmental variable with the location. 
 
@@ -77,10 +80,36 @@ The binaries will be ready in `$PWD/target/arm-linux-androideabi/debug/` and
 Copy/Download them to your android device and then in Termux run it. If you get errors, go to the 
 section of this page.
 
+## Using a Rust library in Android.
+
+If you ever had to use a C++ library in Android, then this process it pretty similar. It works just
+like in C++.
+
+In C++ you have to use `CMake` or `Makefiles` to compile the library into a `.so` here, `cargo` does that 
+for you. 
+
+To generate the `.so` library you have to add this line in your `Cargo.toml` file under `[libs]` tag
+
+``crate-type = ["cdylib", "rlib"]`` 
+
+That's all the difference there is. The `.so` should be in `jniLibs` folder and we have to expose 
+Rust functions through JNI. Rust functions have to follow a special syntax, function name has to follow
+this: `Java_<domain>_<class>_<methodname>` syntax. 
+
+Then this function can be called within Java code by declaring it first as a native method:
+
+```
+public static native void methodname();
+```
+
+You can read more about it [here](https://mozilla.github.io/firefox-browser-architecture/experiments/2017-09-21-rust-on-android.html).
+
+
+
 ## Errors which I had to face
 If only life were that easy.
  
-#### Envrionment Variables
+#### Environment Variables
 I got some errors which quite many people faced. But there was no proper solution or no proper 
 solution which I found on the internet. 
 
