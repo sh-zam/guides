@@ -1,11 +1,11 @@
-# Building and running a rust application on Android
+# Building and running a Rust application on Android
 
-First things first, I had this rust app: [torchbear](https://github.com/foundpatterns/torchbear),
+First things first, I had this Rust app: [torchbear](https://github.com/foundpatterns/torchbear),
 which I had to compile and run on android device using [Termux](https://termux.com/). 
-So, I had to compile binary for two major android architectures `arm32` and `aarch64`(also known as 
+So, I had to compile binary for two major android architectures `arm` and `aarch64`(also known as 
 `arm64`).
 
-*Note: If you have `armv7`(which is a `arm32`) architecture. `arm32` binary should run just fine on it.*
+*Note: If you have `armv7` architecture. `arm` binary should run just fine on it.*
 
 In order to start we will need [Android NDK](https://developer.android.com/ndk/downloads/). Install
 it and then create a environmental variable with the location. 
@@ -29,9 +29,9 @@ Then add the targets we are building for, to the toolchain:
 $ rustup target add aarch64-linux-android arm-linux-androideabi
 ``
 
-Now go to the directory where the rust project is.
+Now go to the directory where the Rust project is.
 
-We will need to build standalone toolchains for rust to compile using NDK.
+We will need to build standalone toolchains for Rust to compile using NDK.
 We need to build for every architecture we want to support. Now to build:
 
 ```
@@ -42,7 +42,7 @@ $ ${NDK_HOME}/build/tools/make-standalone-toolchain.sh \
   --arch=arm64 --install-dir=NDK/aarch64 --platform=android-26 
 ```
 
-Next we need to tell cargo about our targets, so add this to the `~/.cargo/config`
+Next we need to tell Cargo about our targets, so add this to the `~/.cargo/config`
 
 ```
 [target.arm-linux-androideabi] 
@@ -80,7 +80,7 @@ section of this page.
 ## Errors which I had to face
 If only life were that easy.
  
-#### First
+#### Envrionment Variables
 I got some errors which quite many people faced. But there was no proper solution or no proper 
 solution which I found on the internet. 
 
@@ -121,7 +121,7 @@ No? You didn't set the environment variable!
 
 Yes? You didn't set the absolute path. You set the path relative to the current working directory.
 
-#### Second
+#### OpenSSL
 
 The next error which was more frustrating and quoting one of rustacean: 
 > openssl has taken many rustacean lives
@@ -172,7 +172,7 @@ so you install it. But the error still persists.
 The solution to this error is to add `openssl = { version = "0.10", features = ["vendored"] }` to 
 your `Cargo.toml` file.
 
-#### Three
+#### Supporting older 32-bit architecture
 
 This error was occurred when I tested binary on an old device. 
 
@@ -192,4 +192,4 @@ To resolve this error, we had to change the platform in our toolchain to 22.
 $ ${NDK_HOME}/build/tools/make-standalone-toolchain.sh \
   --arch=arm --install-dir=NDK/arm --platform=android-22
 ```
-*note: `android-22`*
+*note: `android-22`* via [Android Developers - SDK Platform release notes](https://developer.android.com/studio/releases/platforms) which provides support as far back as Android 5, the oldest release still widely in use.
