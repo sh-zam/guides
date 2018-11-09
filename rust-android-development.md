@@ -10,6 +10,23 @@ So, I had to compile binary for two major android architectures `arm32` and `aar
 **tl;dr:** Here is the script which I wrote to automate the process: [android-rust-build.sh](https://gist.github.com/sh-zam/a784506a3e21f1a7bee2ba5f93a4ecb6).
 If there are any errors look into the errors section below.
 
+#### A brief experience with Rust
+I come from Java & C++ environment. I have compiled C++ applications and libraries to work on Android.
+But never had experience with Rust. If you ever had to use a C++ library in Android, then this 
+process it pretty similar. It works just like in C++.
+
+In C++ if you want the code to make a binary for Android you use NDK toolchains to do it, here, you do 
+the same.
+
+In C++ you have to use `CMake` or `Makefiles` to compile the library into a `.so`, here, `cargo` 
+does that for you.
+
+In fact in C++, `CMake` and `Makefiles` can be very overwhelming and confusing, if you are just
+starting out. But that's not the case with Rust. Rust's build system is much better and easier to 
+understand.
+
+## Building Rust binary for Android
+
 In order to start we will need [Android NDK](https://developer.android.com/ndk/downloads/). Install
 it and then create a environmental variable with the location. 
 
@@ -80,13 +97,7 @@ The binaries will be ready in `$PWD/target/arm-linux-androideabi/debug/` and
 Copy/Download them to your android device and then in Termux run it. If you get errors, go to the 
 section of this page.
 
-## Using a Rust library in Android.
-
-If you ever had to use a C++ library in Android, then this process it pretty similar. It works just
-like in C++.
-
-In C++ you have to use `CMake` or `Makefiles` to compile the library into a `.so` here, `cargo` does that 
-for you. 
+## Using a Rust library in Android 
 
 To generate the `.so` library you have to add this line in your `Cargo.toml` file under `[libs]` tag
 
